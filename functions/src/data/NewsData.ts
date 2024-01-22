@@ -7,7 +7,6 @@ type News = {
     newsFilePath: string;
 };
 
-// 주어진 JSON 데이터의 타입 정의
 interface NewsRowData {
     N_SEQ: number;
     N_TITLE: string;
@@ -17,7 +16,6 @@ interface NewsRowData {
     FILE_PATH: string;
 }
 
-// 주어진 JSON 데이터의 전체 타입 정의
 interface NewsApiResponse {
     VwNotice: {
         list_total_count: number;

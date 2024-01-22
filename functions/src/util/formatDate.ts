@@ -3,7 +3,7 @@ export const formatDate = (date: Date): string => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
-  
+
     return `${year}${month}${day}`;
 };
 
@@ -29,13 +29,33 @@ export const diffStringDate = (date1: string, date2: string): boolean => {
     return date1Object > date2Object;
 };
 
-export const findLatestDate = (date1: string, date2: string): string => {
-    const parsedDate1 = new Date(date1);
-    const parsedDate2 = new Date(date2);
-  
-    if (parsedDate1 > parsedDate2) {
-      return date1;
-    } else {
-      return date2;
+export const parseDateString = (dateString: string): Date | null => {
+    const dateRegex = /^(\d{4})(\d{2})(\d{2})$/;
+    const match = dateString.match(dateRegex);
+
+    if (!match) {
+        console.error("Invalid date string format");
+        return null;
     }
+
+    const [, year, month, day] = match.map(Number);
+    const parsedDate = new Date(year, month - 1, day); 
+
+    if (isNaN(parsedDate.getTime())) {
+        console.error("Invalid date");
+        return null; 
+    }
+
+    return parsedDate;
+};
+  
+export const findLatestDate = (date1: string, date2: string): string => {
+const parsedDate1 = parseDateString(date1);
+const parsedDate2 = parseDateString(date2);
+
+if (parsedDate1 == null || parsedDate2 == null) {
+    throw new Error("Invalid date format");
+}
+
+return parsedDate1 > parsedDate2 ? date1 : date2;
 };
