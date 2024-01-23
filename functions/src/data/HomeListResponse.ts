@@ -1,9 +1,7 @@
 
 interface HomeListResponse {
     message: number;
-    market: Market[];
-    news: News[]; 
-
+    list: any[]; 
 };
 
 type Market = {
@@ -18,3 +16,20 @@ type Market = {
     borough: string;
     address: string;
 };
+
+/**
+ * function test
+ */
+type MarketData = {
+    id: number;
+    imgUrl: string;
+    latitude: number;
+    longitude: number;
+    name: string;
+    phoneNumber: string;
+    type: string;
+    description: string;
+    borough: string;
+    address: string;
+    viewType: string; 
+}

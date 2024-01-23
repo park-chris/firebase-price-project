@@ -14,44 +14,78 @@ export const getHomeItem = functions
             const marketData = await getMarketData()
             const newsData = await getNewsData()
 
+            const market = {
+                title: "서울 전통시장",
+                items: marketData,
+                viewType: "HORIZONTAL",
+            };
+
+            const news = {
+                title: "물가 소식",
+                items: newsData,
+                viewType: "HORIZONTAL",
+            };
+
+            const combinedData = [market, news];
+
             const response: HomeListResponse = {
                 message: 500,
-                market: marketData,
-                news: newsData,
+                list: combinedData,
             }
 
             res.json(response);
         } catch (error) {
             console.error("Error:", error);
-            res.status(400).json({error: "Internal Server Error"})
+            res.status(400).json({ error: "Internal Server Error" })
         }
-});
+    });
 
 /**
  * function test
  */
-async function getMarketData(): Promise<Market[]>  {
-    const marketSnapshot = await database.collection("markets").orderBy("id").limit(5).get();
-    const marketData: Market[] = [];
+async function getMarketData(): Promise<MarketData[]> {
+    const marketSnapshot = await database.collection("markets").orderBy("id", "desc").limit(5).get();
+    const marketDataList: MarketData[] = [];
 
     marketSnapshot.forEach(doc => {
         const data = doc.data() as Market;
-        marketData.push(data);
-      });
-    return marketData;
+        const marketData: MarketData = {
+            id: data.id,
+            imgUrl: data.imgUrl,
+            latitude: data.latitude,
+            longitude: data.longitude,
+            name: data.name,
+            phoneNumber: data.phoneNumber,
+            type: data.type,
+            description: data.description,
+            borough: data.borough,
+            address: data.address,
+            viewType: "MARKET",
+        }
+        marketDataList.push(marketData);
+    });
+    return marketDataList;
 };
 
 /**
  * function test
  */
-async function getNewsData(): Promise<News[]> {
-    const newsSnapshot = await database.collection("news").orderBy("newsId").limit(5).get();
-    const newsData: News[] = [];
-  
+async function getNewsData(): Promise<NewsData[]> {
+    const newsSnapshot = await database.collection("news").orderBy("newsId", "desc").limit(5).get();
+    const newsDataList: NewsData[] = [];
+
     newsSnapshot.forEach(doc => {
-      const data = doc.data() as News;
-      newsData.push(data);
+        const data = doc.data() as News;
+        const newsData: NewsData = {
+            newsId: data.newsId,
+            newsTitle: data.newsTitle,
+            newsContent: data.newsContent,
+            newsDate: data.newsDate,
+            newsFilePath: data.newsFilePath,
+            viewType: "NEWS",
+        };
+        newsDataList.push(newsData);
     });
-  
-    return newsData;
+
+    return newsDataList;
 };

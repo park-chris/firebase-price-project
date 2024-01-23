@@ -7,6 +7,18 @@ type News = {
     newsFilePath: string;
 };
 
+/**
+ * function test
+ */
+type NewsData = {
+    newsId: number;
+    newsTitle: string;
+    newsContent: string;
+    newsDate: string;
+    newsFilePath: string;
+    viewType: string; 
+}
+
 interface NewsRowData {
     N_SEQ: number;
     N_TITLE: string;
