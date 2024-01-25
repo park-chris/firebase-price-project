@@ -13,6 +13,12 @@ export const getHomeItem = functions
 
             const marketData = await getMarketData()
             const newsData = await getNewsData()
+            const noticeData = await getNoticeData()
+
+            const notice = {
+                items: noticeData,
+                viewType: "VIEW_PAGER",
+            };
 
             const market = {
                 title: "서울 전통시장",
@@ -26,7 +32,7 @@ export const getHomeItem = functions
                 viewType: "HORIZONTAL",
             };
 
-            const combinedData = [market, news];
+            const combinedData = [notice, market, news];
 
             const response: HomeListResponse = {
                 message: 500,
@@ -89,3 +95,27 @@ async function getNewsData(): Promise<NewsData[]> {
 
     return newsDataList;
 };
+
+/**
+ * function test
+ */
+async function getNoticeData(): Promise<NoticeData[]> {
+    const noticeSnapshot = await database.collection("notices").orderBy("id", "desc").get();
+    const noticeDataList: NoticeData[] = [];
+
+    noticeSnapshot.forEach(doc => {
+        const data = doc.data() as Notice;
+        const noticeData: NoticeData = {
+            id: data.id,
+            title: data.title,
+            subtitle: data.subtitle,
+            imageUrl: data.imageUrl,
+            content: data.content,
+            viewType: "NOTICE",
+        };
+        noticeDataList.push(noticeData);
+    });
+
+    return noticeDataList;
+};
+

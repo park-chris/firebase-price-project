@@ -5,3 +5,4 @@ import  { getHomeItem } from "./modules/getHomeItem";
 export const scheduledUpdateTask = updateMarketItems;
 export const scheduledUpdateNewsTask = updatePriceNews;
 export const getHomeList = getHomeItem;
+

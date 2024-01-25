@@ -59,3 +59,24 @@ if (parsedDate1 == null || parsedDate2 == null) {
 
 return parsedDate1 > parsedDate2 ? date1 : date2;
 };
+
+
+export const parseDateToYearMonth = (dateString: string):string | null => {
+    const dateRegex = /^(\d{4})(\d{2})(\d{2})$/;
+    const match = dateString.match(dateRegex);
+
+    if (!match) {
+        console.error("Invalid date string format");
+        return null;
+    }
+
+    const [, year, month, day] = match.map(Number);
+    const parsedDate = new Date(year, month - 1, day); 
+
+    if (isNaN(parsedDate.getTime())) {
+        console.error("Invalid date");
+        return null; 
+    }
+
+    return `${parsedDate.getFullYear}-${parsedDate.getMonth}`;
+};
