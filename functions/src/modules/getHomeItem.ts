@@ -105,15 +105,18 @@ async function getNoticeData(): Promise<NoticeData[]> {
 
     noticeSnapshot.forEach(doc => {
         const data = doc.data() as Notice;
-        const noticeData: NoticeData = {
-            id: data.id,
-            title: data.title,
-            subtitle: data.subtitle,
-            imageUrl: data.imageUrl,
-            content: data.content,
-            viewType: "NOTICE",
-        };
-        noticeDataList.push(noticeData);
+
+        if (data.enabled) {
+            const noticeData: NoticeData = {
+                id: data.id,
+                title: data.title,
+                subtitle: data.subtitle,
+                imageUrl: data.imageUrl,
+                content: data.content,
+                viewType: "NOTICE",
+            };
+            noticeDataList.push(noticeData);
+        }
     });
 
     return noticeDataList;
