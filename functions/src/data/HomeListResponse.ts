@@ -15,6 +15,7 @@ type Market = {
     description: string;
     borough: string;
     address: string;
+    reviewCount: number;
 };
 
 /**
@@ -32,4 +33,5 @@ type MarketData = {
     borough: string;
     address: string;
     viewType: string; 
+    reviewCount: number;
 }

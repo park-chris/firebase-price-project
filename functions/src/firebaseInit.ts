@@ -1,8 +1,9 @@
 import * as admin from "firebase-admin";
 
-// Firebase 앱을 한 번만 초기화
 if (!admin.apps.length) {
-  admin.initializeApp();
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const serviceAccount = require("../admin.json");
+  admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 }
 
 export { admin };

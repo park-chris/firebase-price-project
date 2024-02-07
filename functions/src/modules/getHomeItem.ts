@@ -67,6 +67,7 @@ async function getMarketData(): Promise<MarketData[]> {
             borough: data.borough,
             address: data.address,
             viewType: "MARKET",
+            reviewCount: data.reviewCount,
         }
         marketDataList.push(marketData);
     });
