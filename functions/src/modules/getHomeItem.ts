@@ -23,12 +23,14 @@ export const getHomeItem = functions
             const market = {
                 title: "서울 전통시장",
                 items: marketData,
+                titleVisible: true,
                 viewType: "HORIZONTAL",
             };
 
             const news = {
                 title: "물가 소식",
                 items: newsData,
+                titleVisible: true,
                 viewType: "HORIZONTAL",
             };
 
