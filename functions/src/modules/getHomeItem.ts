@@ -11,9 +11,13 @@ export const getHomeItem = functions
     .onRequest(async (req, res) => {
         try {
 
-            const marketData = await getMarketData()
-            const newsData = await getNewsData()
+            const markets = await getMarketData()
+            const marketData: Market[] = markets.slice(0, 10);
+
+            // const newsData = await getNewsData()
             const noticeData = await getNoticeData()
+
+            const recommandedMarketData: Market[] = markets.sort((a,b) => b.reviewCount - a.reviewCount).slice(0, 10);
 
             const notice = {
                 items: noticeData,
@@ -26,15 +30,23 @@ export const getHomeItem = functions
                 titleVisible: true,
                 viewType: "HORIZONTAL",
             };
-
-            const news = {
-                title: "물가 소식",
-                items: newsData,
-                titleVisible: true,
+            
+            const recommandedMarket = {
+                title: "추천 시장",
+                items: recommandedMarketData,
+                titleVisible: false,
                 viewType: "HORIZONTAL",
             };
 
-            const combinedData = [notice, market, news];
+            // const news = {
+            //     title: "물가 소식",
+            //     items: newsData,
+            //     titleVisible: true,
+            //     viewType: "HORIZONTAL",
+            // };
+
+            // const combinedData = [notice, market, news];
+            const combinedData = [notice, market, recommandedMarket];
 
             const response: HomeListResponse = {
                 message: 500,
@@ -52,7 +64,7 @@ export const getHomeItem = functions
  * function test
  */
 async function getMarketData(): Promise<MarketData[]> {
-    const marketSnapshot = await database.collection("markets").orderBy("id", "desc").limit(5).get();
+    const marketSnapshot = await database.collection("markets").orderBy("id", "desc").get();
     const marketDataList: MarketData[] = [];
 
     marketSnapshot.forEach(doc => {
@@ -79,25 +91,25 @@ async function getMarketData(): Promise<MarketData[]> {
 /**
  * function test
  */
-async function getNewsData(): Promise<NewsData[]> {
-    const newsSnapshot = await database.collection("news").orderBy("newsId", "desc").limit(5).get();
-    const newsDataList: NewsData[] = [];
+// async function getNewsData(): Promise<NewsData[]> {
+//     const newsSnapshot = await database.collection("news").orderBy("newsId", "desc").limit(5).get();
+//     const newsDataList: NewsData[] = [];
 
-    newsSnapshot.forEach(doc => {
-        const data = doc.data() as News;
-        const newsData: NewsData = {
-            newsId: data.newsId,
-            newsTitle: data.newsTitle,
-            newsContent: data.newsContent,
-            newsDate: data.newsDate,
-            newsFilePath: data.newsFilePath,
-            viewType: "NEWS",
-        };
-        newsDataList.push(newsData);
-    });
+//     newsSnapshot.forEach(doc => {
+//         const data = doc.data() as News;
+//         const newsData: NewsData = {
+//             newsId: data.newsId,
+//             newsTitle: data.newsTitle,
+//             newsContent: data.newsContent,
+//             newsDate: data.newsDate,
+//             newsFilePath: data.newsFilePath,
+//             viewType: "NEWS",
+//         };
+//         newsDataList.push(newsData);
+//     });
 
-    return newsDataList;
-};
+//     return newsDataList;
+// };
 
 /**
  * function test
