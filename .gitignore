@@ -9,6 +9,11 @@ firebase-debug.*.log*
 
 # Firebase cache
 .firebase/
+.firebaserc
+firestore.rules
+firebase.json
+firestore.indexes.json
+
 
 # Firebase config
 
@@ -66,3 +71,4 @@ node_modules/
 .env
 
 admin.json
+config.json
