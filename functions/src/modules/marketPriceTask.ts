@@ -48,7 +48,7 @@ async function fetchDataFromOpenAPI(): Promise<number> {
     const lastUpdateAt = startIndexSnapshot.data()?.lastUpdateAt || "20231210";
     let updateDate = formatDate(new Date());
     let endIndex = startIndex + 99;
-    let apiUrl = `http://openAPI.seoul.go.kr:8088/${config.apiKey}/json/ListNecessariesPricesService/${startIndex}/${endIndex}/`;
+    let apiUrl = `http://openAPI.seoul.go.kr:8088/${config.marketApiKey}/json/ListNecessariesPricesService/${startIndex}/${endIndex}/`;
 
     do {
       const fetchResponse = await fetch(apiUrl);
@@ -109,7 +109,7 @@ async function fetchDataFromOpenAPI(): Promise<number> {
       startIndex += rowList.length;
       endIndex += rowList.length;
 
-      apiUrl = `http://openAPI.seoul.go.kr:8088/${config.apiKey}/json/ListNecessariesPricesService/${startIndex}/${endIndex}/`;
+      apiUrl = `http://openAPI.seoul.go.kr:8088/${config.marketApiKey}/json/ListNecessariesPricesService/${startIndex}/${endIndex}/`;
 
     } while (diffStringDate(updateDate, lastUpdateAt));
 
