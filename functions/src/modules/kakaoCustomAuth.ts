@@ -5,11 +5,6 @@ import axios from "axios";
 const REGION = "asia-northeast3";
 const kakaoRequestMeUrl = "https://kapi.kakao.com/v2/user/me";
 
-
-
-
-
-
 /**
  * requestMe - Returns user profile from Kakao API
  *
