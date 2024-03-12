@@ -72,3 +72,4 @@ node_modules/
 
 admin.json
 config.json
+package-lock.json
