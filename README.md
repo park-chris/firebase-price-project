@@ -32,3 +32,6 @@
 |GET|/getHomeList|홈 화면의 목록 조회|
 |GET|/getSearch/{keyword}|검색 결과 조회|
 |POST|/getKakaoCustomAuth|카카오 인증 후 JWT 생성 및 반환|
+
+
+
